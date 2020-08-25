@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>Accounts</title>
+    </head>
+    <body>
+
+        <h1>Henkilöt</h1>
+
+        <ul>
+            <li th:each="account: ${accounts}">
+                <a th:href="@{/accounts/{id}(id=${account.id})}">
+                    <span th:text="${account.username}">name</span>
+                    <form method="POST" th:action="@{/accounts/{id}(id=${account.id})}">
+                        <input type="submit" value="Lisää yhteys!"/>
+                    </form>
+                </a>
+            </li>
+        </ul>
+
+
+
+        <p>
+            <a th:href="@{/profilepage}">Oma sivu</a>
+        </p>
+
+    </body>
+</html>

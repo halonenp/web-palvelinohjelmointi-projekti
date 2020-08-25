@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Tervetuloa</title>
+    </head>
+    <body>
+
+
+
+        <div>
+            <h1>Tervetuloa  <span th:text="${account.username}">username</span>, <span th:text="${account.username}">name</span>!</h1>
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" value="Kirjaudu ulos"></input>
+            </form>
+
+            <h2>Taidot</h2>
+
+            <ul>
+                <li th:each="skill : ${account.skills}">
+                    <p><span th:text="${skill.skill}">skill</span>, <span th:text="${skill.likes}">skill</span> tykkäystä</p>
+                </li>
+            </ul>
+
+            <form th:action="@{/skills}" method="POST">
+                <input name="name"></input>
+                <input type="submit" value="Lisää taito!"></input>
+            </form>
+
+
+            <h2>Odottavat yhteydet</h2>
+
+            <ul>
+                <li th:each="connection : ${unacceptedConnectionsTo}">
+                    <a th:href="@{/accounts/{id}(id=${connection.connecter.id})}">
+                        <span th:text="${connection.connecter.username}">name</span>
+                    </a>
+                    <form method="POST" th:action="@{/connections/{id}(id=${connection.id})}">
+                        <input type="submit" value="Hyväksy yhteys!"/>
+                    </form>
+                    <form th:method="DELETE" th:action="@{/connections/{id}(id=${connection.id})}">
+                        <input type="submit" value="Hylkää yhteys!"/>
+                    </form>
+                </li>
+            </ul>
+
+            <ul>
+                <li th:each="connection : ${unacceptedConnectionsFrom}">
+                    <a th:href="@{/accounts/{id}(id=${connection.receiver.id})}">
+                        <span th:text="${connection.receiver.username}">name</span>
+                    </a> Odottaa käyttäjän hyväksyntää
+                </li>
+            </ul>
+
+            <h2>Hyväksytyt yhteydet</h2>
+
+            <ul>
+                <li th:each="connection : ${acceptedConnectionsTo}">
+                    <a th:href="@{/accounts/{id}(id=${connection.connecter.id})}">
+                        <span th:text="${connection.connecter.username}">name</span>
+                    </a>
+                    <form th:method="DELETE" th:action="@{/connections/{id}(id=${connection.id})}">
+                        <input type="submit" value="Poista yhteys!"/>
+                    </form>
+                </li>
+            </ul>
+            <ul>
+                <li th:each="connection : ${acceptedConnectionsFrom}">
+                    <a th:href="@{/accounts/{id}(id=${connection.receiver.id})}">
+                        <span th:text="${connection.receiver.username}">name</span>
+                    </a>
+                    <form th:method="DELETE" th:action="@{/connections/{id}(id=${connection.id})}">
+                        <input type="submit" value="Poista yhteys!"/>
+                    </form>
+                </li>
+            </ul>
+
+
+            <p>
+                <a th:href="@{/accounts}">Henkilölista</a>
+            </p>
+
+
+
+        </div>
+
+
+    </body>
+</html>
