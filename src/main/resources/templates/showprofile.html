@@ -1,11 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
-    <head>
+    <head th:replace="fragments/layout :: head">
         <meta charset="UTF-8" />
         <title>account</title>
     </head>
     <body>
-
+        <header th:replace="fragments/layout :: header">
+            <p>menu</p>
+        </header>
         <h1><span th:text="${account.username}">name</span></h1>
 
 
@@ -14,25 +16,19 @@
 
         <ul>
             <li th:each="skill : ${account.skills}">
-                <p><span th:text="${skill.skill}">skill</span>, <span th:text="${skill.likes}">skill</span> tykkäystä</p>
+                <p><span th:text="${skill.skill}">skill</span>, <span th:text="${skill.likes}">skill</span> likes</p>
                 <form method="POST" th:action="@{/accounts/{id}/skills/{skillId}(id=${account.id}, skillId=${skill.id})}">
-                    <input type="submit" value="Tykkää!"/>
+                    <input type="submit" value="Like!"/>
                 </form>
             </li>
         </ul>
 
         <form method="POST" th:action="@{/accounts/{id}(id=${account.id})}">
-            <input type="submit" value="Lisää yhteys!"/>
+            <input type="submit" value="Add friend!"/>
         </form>
 
 
-        <p>
-            <a th:href="@{/accounts}">Henkilölista</a>
-        </p>
 
-        <p>
-            <a th:href="@{/profilepage}">Oma sivu</a>
-        </p>
 
 
 

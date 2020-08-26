@@ -34,7 +34,7 @@ public class AccountController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-    
+
     @Autowired
     SkillRepository skillRepository;
 
@@ -49,7 +49,7 @@ public class AccountController {
         return "registration";
     }
 
-    @PostMapping("/registration")
+    /*@PostMapping("/registration")
     public String register(
             @Valid @ModelAttribute Account account,
             BindingResult bindingResult) {
@@ -58,14 +58,43 @@ public class AccountController {
         }
 
         accountRepository.save(account);
-        return "redirect:/accounts";
-    }
+        return "redirect:/profilepage";
+    }*/
 
+    @PostMapping("/registration")
+    public String add(@RequestParam String username, @RequestParam String password) {
+        if (accountRepository.findByUsername(username) != null) {
+            return "redirect:/registration";
+        }
+
+        Account a = new Account(username, passwordEncoder.encode(password), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        accountRepository.save(a);
+        return "redirect:/login";
+    }
+     
+ /*
+    @PostMapping("/registration")
+    public String register(
+            @Valid @ModelAttribute Account account, @RequestParam String username,
+            @RequestParam String password,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+        account.setUsername(username);
+        account.setPassword(passwordEncoder.encode(password));
+        accountRepository.save(account);
+        return "redirect:/profilepage";
+    }
+     */
     @GetMapping("/profilepage")
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
-            Account account = getCurrentAccount();
+            String username = auth.getName();
+            Account account = accountRepository.findByUsername(username);
+            model.addAttribute("username", username);
+            model.addAttribute("skills", account.getSkills());
             List<Connection> connectionsTo = new ArrayList<>();
             List<Connection> connectionsFrom = new ArrayList<>();
             if (account != null) {
@@ -108,7 +137,7 @@ public class AccountController {
         Account currentAccount = accountRepository.findByUsername(auth.getName());
         return currentAccount;
     }
-    
+
     @PostMapping("/accounts/{id}/skills/{skillId}")
     public String likeSkill(@PathVariable Long id, @PathVariable Long skillId) {
         Skill skill = skillRepository.getOne(skillId);
@@ -121,13 +150,12 @@ public class AccountController {
         skillRepository.save(skill);
         return "redirect:/accounts/{id}";
     }
-    
+
     @GetMapping("/accounts/{id}")
     public String getOne(Model model, @PathVariable Long id) {
         model.addAttribute("account", accountRepository.getOne(id));
         return "showprofile";
     }
-
 
     @PostMapping("/skills")
     public String addSkill(@RequestParam String name
@@ -136,7 +164,7 @@ public class AccountController {
         skill.setSkill(name);
         skill.setLikes(0);
         skill.setLikers("");
-        
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Account account = accountRepository.findByUsername(username);

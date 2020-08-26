@@ -5,9 +5,11 @@
  */
 package projekti;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,14 +24,16 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Skill extends AbstractPersistable<Long> {
+public class Chat extends AbstractPersistable<Long> {
 
-    @Size(min = 1, max = 40)
-    private String skill;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime timeposted = LocalDateTime.now();
+    private String content;
+    private String writer;
     private int likes = 0;
     private String likers;
 
-    @ManyToOne
-    private Account account;
+    @OneToMany(mappedBy = "chat")
+    private List<Comment> comments;
 
 }

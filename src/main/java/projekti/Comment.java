@@ -5,7 +5,6 @@
  */
 package projekti;
 
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
@@ -22,14 +21,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Skill extends AbstractPersistable<Long> {
+public class Comment extends AbstractPersistable<Long> {
 
-    @Size(min = 1, max = 40)
-    private String skill;
-    private int likes = 0;
-    private String likers;
-
+    @Size(min = 1, max = 50)
+    private String comment;
+    private String writer;
     @ManyToOne
-    private Account account;
-
+    private Chat chat;
 }

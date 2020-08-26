@@ -31,7 +31,7 @@ public class Account extends AbstractPersistable<Long> {
     private String username;
 
     @NotEmpty
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 61)
     private String password;
 
     @OneToMany(mappedBy = "connecter")

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head lang="en">
+    <head th:replace="fragments/layout :: head">
         <meta charset="UTF-8" />
         <title>Accounts</title>
     </head>
     <body>
+        <header th:replace="fragments/layout :: header">
+            <p>menu</p>
+        </header>
 
-        <h1>Henkilöt</h1>
+        <h1>People on the site</h1>
 
         <ul>
             <li th:each="account: ${accounts}">
@@ -21,9 +24,7 @@
 
 
 
-        <p>
-            <a th:href="@{/profilepage}">Oma sivu</a>
-        </p>
+
 
     </body>
 </html>
