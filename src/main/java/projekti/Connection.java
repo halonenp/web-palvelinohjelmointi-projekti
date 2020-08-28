@@ -22,10 +22,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Connection extends AbstractPersistable<Long> {
 
+    
     @ManyToOne
-    private Account connecter;
+    private Account connecter; //account which sent the friend request
     @ManyToOne
-    private Account receiver;
+    private Account receiver; //account which received the friend request
 
     private boolean accepted;
 }

@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <meta charset="UTF-8" />
+        <style>
+            th, td {
+                padding: 5px;
+            }
+            input {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: 2px solid gray;
+                border-radius: 4px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Login</h1>
+            <div class="col">
+                <form name='f' action="login" method='POST'>
+                    <table>
+                        <tr>
+                            <td>Username:</td>
+                            <td><input type='text' name='username' value=''></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td><input type='password' name='password' /></td>
+                        </tr>
+                        <tr>
+                            <td><input name="submit" type="submit" value="submit" class="btn btn-primary"/></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="col">
+                <strong>Don't have an account?</strong> <a th:href="@{/registration}">Sign Up!</a> 
+            </div>
+        </div>
+    </body>
+</html>

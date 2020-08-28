@@ -38,13 +38,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
-                .antMatchers("/accounts", "/accounts/**").permitAll()
+                //.antMatchers("/accounts", "/accounts/**").permitAll()
                 .antMatchers("/registration", "/registration/**").permitAll()
                 .antMatchers("/h2-console", "/h2-console/**").permitAll()
-                .antMatchers("/index", "/index/**").permitAll()
+                //.antMatchers("/index", "/index/**").permitAll()
                 //.antMatchers("/profilepage", "/profilepage/**").permitAll()
                 .anyRequest().authenticated().and()
-                .formLogin().permitAll()
+                .formLogin().permitAll().loginPage("/login")
                 .defaultSuccessUrl("/profilepage", true).and()
                 .logout().permitAll();
         

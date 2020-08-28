@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -39,20 +40,27 @@ public class AccountController {
     SkillRepository skillRepository;
 
     @GetMapping("/accounts")
-    public String list(Model model) {
+    public String listAllAccounts(Model model) {
         model.addAttribute("accounts", accountRepository.findAll());
         return "accounts";
     }
 
+    @GetMapping("/login")
+    public String viewLogin() {
+        return "login";
+    }
+
     @GetMapping("/registration")
-    public String view() {
+    public String viewRegistration() {
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String signup(@Valid @ModelAttribute Account account, BindingResult bindingResult, @RequestParam String username,
+    public String register(@Valid @ModelAttribute Account account, BindingResult bindingResult, @RequestParam String username,
             @RequestParam String password) throws IOException {
-
+        if (accountRepository.findByUsername(username) != null) {
+            return "registration";
+        }
         if (bindingResult.hasErrors()) {
             return "registration";
         }
@@ -63,55 +71,12 @@ public class AccountController {
         user.setConnectionsToThisAccount(new ArrayList<>());
         user.setSkills(new ArrayList<>());
 
-        //Account a = new Account(username, passwordEncoder.encode(password), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        /*
-        Account user = new Account();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));*/
-        
         accountRepository.save(user);
         return "redirect:/login";
     }
 
-    /*@PostMapping("/registration")
-    public String register(
-            @Valid @ModelAttribute Account account,
-            BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-
-        accountRepository.save(account);
-        return "redirect:/profilepage";
-    }*/
- /*
-    @PostMapping("/registration")
-    public String add(@RequestParam String username, @RequestParam String password) {
-        if (accountRepository.findByUsername(username) != null) {
-            return "redirect:/registration";
-        }
-
-        Account a = new Account(username, passwordEncoder.encode(password), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-        accountRepository.save(a);
-        return "redirect:/login";
-    }*/
- /*
-    @PostMapping("/registration")
-    public String register(
-            @Valid @ModelAttribute Account account, @RequestParam String username,
-            @RequestParam String password,
-            BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        }
-        account.setUsername(username);
-        account.setPassword(passwordEncoder.encode(password));
-        accountRepository.save(account);
-        return "redirect:/profilepage";
-    }
-     */
     @GetMapping("/profilepage")
-    public String home(Model model) {
+    public String viewOwnProfile(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             String username = auth.getName();
@@ -134,6 +99,7 @@ public class AccountController {
             for (Connection connection : connectionsTo) {
                 if (!connection.isAccepted()) {
                     unacceptedConnectionsTo.add(connection);
+
                 } else {
                     acceptedConnectionsTo.add(connection);
                 }
@@ -175,7 +141,7 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/{id}")
-    public String getOne(Model model, @PathVariable Long id) {
+    public String getOneAccount(Model model, @PathVariable Long id) {
         model.addAttribute("account", accountRepository.getOne(id));
         return "showprofile";
     }
@@ -195,6 +161,12 @@ public class AccountController {
         skill.setAccount(account);
 
         skillRepository.save(skill);
+        return "redirect:/profilepage";
+    }
+
+    @DeleteMapping("/skills/{id}")
+    public String removeSkill(@PathVariable Long id) {
+        skillRepository.deleteById(id);
         return "redirect:/profilepage";
     }
 

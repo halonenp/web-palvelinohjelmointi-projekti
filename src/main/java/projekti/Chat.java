@@ -28,8 +28,8 @@ public class Chat extends AbstractPersistable<Long> {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timeposted = LocalDateTime.now();
-    private String content;
-    private String writer;
+    private String content; //the message
+    private String writer; //account's username which the message is from
     private int likes = 0;
     private String likers;
 

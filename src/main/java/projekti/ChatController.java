@@ -36,14 +36,14 @@ public class ChatController {
     AccountRepository accountRepository;
     
     @GetMapping("/chatpage")
-    public String list(Model model) {
+    public String listAllChats(Model model) {
         Pageable pageable = PageRequest.of(0, 15, Sort.by("timeposted").descending());
         model.addAttribute("chats", chatRepository.findAll(pageable));
         return "chatpage";
     }
     
     @PostMapping("/chatpage")
-    public String create(@RequestParam String chat) {
+    public String AddAChatToChatpage(@RequestParam String chat) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Account account = accountRepository.findByUsername(username);
@@ -58,7 +58,7 @@ public class ChatController {
     }
     
     @PostMapping("/chatpage/{id}")
-    public String likeMessages(@PathVariable Long id) {
+    public String likeAChat(@PathVariable Long id) {
         Chat msg = chatRepository.getOne(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -71,7 +71,7 @@ public class ChatController {
     }
     
     @PostMapping("/chatpage/{id}/comments")
-    public String addComment(@RequestParam String comment, @PathVariable Long id) {
+    public String addACommentToAChat(@RequestParam String comment, @PathVariable Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Account account = accountRepository.findByUsername(username);

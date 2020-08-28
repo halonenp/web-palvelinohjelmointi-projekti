@@ -1,37 +1,38 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head th:replace="fragments/layout :: head">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
         <meta charset="UTF-8" />
         <title>account</title>
+        
     </head>
     <body>
         <header th:replace="fragments/layout :: header">
-            <p>menu</p>
+
         </header>
-        <h1><span th:text="${account.username}">name</span></h1>
+        <div class="container">
+            <h1><span th:text="${account.username}">name</span></h1>
 
+            <h2>Skills</h2>
+            <div class="row">
+                <div class="col-3">
+                    <ul>
+                        <li th:each="skill : ${account.skills}">
+                            <p><span th:text="${skill.skill}">skill</span>, <span th:text="${skill.likes}">skill</span> likes</p>
+                            <form method="POST" th:action="@{/accounts/{id}/skills/{skillId}(id=${account.id}, skillId=${skill.id})}">
+                                <input type="submit" value="Like!"/>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <form method="POST" th:action="@{/accounts/{id}(id=${account.id})}">
+                        <input type="submit" value="Add friend!"/>
+                    </form>
+                </div>
 
-
-        <h2>Taidot</h2>
-
-        <ul>
-            <li th:each="skill : ${account.skills}">
-                <p><span th:text="${skill.skill}">skill</span>, <span th:text="${skill.likes}">skill</span> likes</p>
-                <form method="POST" th:action="@{/accounts/{id}/skills/{skillId}(id=${account.id}, skillId=${skill.id})}">
-                    <input type="submit" value="Like!"/>
-                </form>
-            </li>
-        </ul>
-
-        <form method="POST" th:action="@{/accounts/{id}(id=${account.id})}">
-            <input type="submit" value="Add friend!"/>
-        </form>
-
-
-
-
-
-
-
+            </div>
+        </div>
     </body>
 </html>

@@ -6,25 +6,30 @@
     </head>
     <body>
         <header th:replace="fragments/layout :: header">
-            <p>menu</p>
+
         </header>
+        <div class="container">
+            <h1>People on the site</h1>
+            <p>On this page you can see a list of all accounts</p>
+            <div class="row">
+                <ul>
 
-        <h1>People on the site</h1>
+                    <li th:each="account: ${accounts}">
+                        <a th:href="@{/accounts/{id}(id=${account.id})}">
 
-        <ul>
-            <li th:each="account: ${accounts}">
-                <a th:href="@{/accounts/{id}(id=${account.id})}">
-                    <span th:text="${account.username}">name</span>
-                    <form method="POST" th:action="@{/accounts/{id}(id=${account.id})}">
-                        <input type="submit" value="Lisää yhteys!"/>
-                    </form>
-                </a>
-            </li>
-        </ul>
+                            <span th:text="${account.username}">name</span>
 
 
 
-
-
+                        </a>
+                        <div class="col">
+                            <form method="POST" th:action="@{/accounts/{id}(id=${account.id})}">
+                                <input type="submit" value="Add Friend!"/>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>

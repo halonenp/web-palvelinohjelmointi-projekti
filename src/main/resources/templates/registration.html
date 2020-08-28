@@ -1,21 +1,62 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Le Dance Signup</title>
+        <title>Sign up</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
         <meta charset="UTF-8" />
+        <style>
+            th, td {
+                padding: 5px;
+            }
+            .button {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 16px 28px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            .button1 {
+                background-color: white; 
+                color: black; 
+                border: 2px solid #4CAF50;
+            }
+
+            .button1:hover {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+        </style>
     </head>
     <body>
-        <h1>Sign up!</h1>
- 
-        <form action="#" th:action="@{/registration}" th:object="${account}" method="POST">
-            <input type="text" name="username"/>
-            <input type="password" name="password"/>
-            <input type="submit" value="Create new account!"/>
-        </form>
-        
-        <a  th:href="@{/login}">Login</a>
+        <div class="container">
+            <h1>Sign up and join the community!</h1>
+
+            <form action="#" th:action="@{/registration}" th:object="${account}" method="POST">
+                <table >
+                    <tr>
+                        <td>Username:</td>
+                        <td><input type='text' name='username'/></td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td><input type='password' name='password' /></td>
+                    </tr>
+                    <tr>
+                        <td><input name="submit" type="submit" value="submit" class="button button1"/></td>
+                    </tr>
+                </table>
+
+            </form>
+
+            <strong>Already have an account?</strong> <a  th:href="@{/login}">Login</a>
+        </div>
     </body>
 </html>
- 

@@ -25,7 +25,7 @@ public class Comment extends AbstractPersistable<Long> {
 
     @Size(min = 1, max = 50)
     private String comment;
-    private String writer;
+    private String writer; //account's username which the message is from
     @ManyToOne
     private Chat chat;
 }

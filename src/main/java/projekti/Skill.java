@@ -24,10 +24,10 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Skill extends AbstractPersistable<Long> {
 
-    @Size(min = 1, max = 40)
+    @Size(min = 1, max = 30)
     private String skill;
     private int likes = 0;
-    private String likers;
+    private String likers; //This is needed to prevent multiple likes from same account
 
     @ManyToOne
     private Account account;

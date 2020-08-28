@@ -3,47 +3,46 @@
     <head th:replace="fragments/layout :: head">
         <meta charset="UTF-8" />
         <title>Chat</title>
+        
     </head>
     <body>
 
         <header th:replace="fragments/layout :: header">
-            <p>menu</p>
+            
         </header>
-
-        <h1>Chat</h1>
-        <form th:action="@{/chatpage}" method="POST">
-            <input name="chat"></input>
-            <input type="submit" value="Send!"></input>
-        </form>
-        <ul>
-            <li th:each="chat : ${chats}">
-                <strong><span th:text="${chat.content}">content</span></strong>  From
-                <span th:text="${chat.writer}">writer</span>
-                - <span th:text="${chat.timeposted}">timeposted</span>
-                - <span th:text="${chat.likes}">likes</span> likes
-                <form method="POST" th:action="@{/chatpage/{id}(id=${chat.id})}">
-                    <input type="submit" value="Like!"/>
-                </form>
-
-
-                <ul>
-                    <li th:each="comment : ${chat.comments}">
-                        <span th:text="${comment.comment}">comment</span>  From
-                        <span th:text="${comment.writer}">  </span>
-                    </li>
-                </ul>
-
-                <form th:action="@{/chatpage/{id}/comments(id=${chat.id})}" method="POST">
-                    <input name="comment"></input>
-                    <input type="submit" value="Add comment!"></input>
-                </form>
-            </li>
-        </ul>
+        <div class="container">
+            <h1>Chat</h1>
+            <p>On this page you can chat with other people. Remember to like and comment.</p>
+            <form th:action="@{/chatpage}" method="POST">
+                <input name="chat"></input>
+                <input type="submit" value="Send!"></input>
+            </form>
+            <ul style="list-style: square;">
+                <li th:each="chat : ${chats}">
+                    <strong><span th:text="${chat.content}">content</span></strong>  From
+                    <span th:text="${chat.writer}">writer</span>
+                    - <span th:text="${chat.timeposted}">timeposted</span>
+                    - <span th:text="${chat.likes}">likes</span> <strong>likes</strong><form method="POST" th:action="@{/chatpage/{id}(id=${chat.id})}">
+                        <input type="submit" value="Like!"/>
+                    </form>
+                    
 
 
+                    <ul>
+                        <li th:each="comment : ${chat.comments}">
+                            <span th:text="${comment.comment}">comment</span>  From
+                            <span th:text="${comment.writer}">  </span>
+                        </li>
+                    </ul>
 
+                    <form th:action="@{/chatpage/{id}/comments(id=${chat.id})}" method="POST">
+                        <input name="comment"></input>
+                        <input type="submit" value="Add comment!"></input>
+                    </form>
+                </li>
+            </ul>
 
-
+        </div>
 
     </body>
 </html>

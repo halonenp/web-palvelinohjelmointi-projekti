@@ -2,30 +2,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
     <head th:replace="fragments/layout :: head">
         <meta charset="UTF-8" />
+
         <title>Own profile</title>
+
     </head>
     <body>
         <header th:replace="fragments/layout :: header">
-            <p>menu</p>
+
         </header>
 
 
         <div sec:authorize="isAuthenticated()" class="container">
             <h1>Welcome  <span th:text="${username}">username</span>!</h1>
-
+            <p>This is your personal profile. You can manage your friends and skills on this page.</p>
 
             <h2>Your skills</h2>
             <div class="row">
                 <div class="col">
-                    <ul>
+                    <ul style="list-style: square;">
                         <li th:each="skill : ${skills}">
                             <p><span th:text="${skill.skill}">skill</span>, <span th:text="${skill.likes}">skill</span> likes</p>
+                            <form th:method="DELETE" th:action="@{/skills/{id}(id=${skill.id})}">
+                                <input type="submit" value="Remove skill"/>
+                            </form>
                         </li>
+
                     </ul>
 
                     <form th:action="@{/skills}" method="POST">
                         <input name="name"></input>
-                        <input type="submit" value="Lisää taito!"></input>
+                        <input type="submit" value="Add a skill!"></input>
                     </form>
                 </div>
                 <div class="col">
@@ -38,7 +44,7 @@
                                 <span th:text="${connection.connecter.username}">name</span>
                             </a>
                             <form th:method="DELETE" th:action="@{/connections/{id}(id=${connection.id})}">
-                                <input type="submit" value="Poista yhteys!"/>
+                                <input type="submit" value="Unfriend!"/>
                             </form>
                         </li>
                     </ul>
@@ -52,7 +58,8 @@
                             </form>
                         </li>
                     </ul>
-
+                </div>
+                <div class="col">
                     <h2>Friends waiting to be accepted</h2>
 
                     <ul>
@@ -76,9 +83,6 @@
                             </a> 
                         </li>
                     </ul>
-
-
-
 
                 </div>
 
