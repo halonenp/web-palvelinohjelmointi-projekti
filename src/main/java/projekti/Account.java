@@ -22,7 +22,7 @@ import javax.persistence.Table;
  * @author halon
  */
 @Entity
-@Table(name="account")
+@Table(name = "account")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,7 +33,6 @@ public class Account extends AbstractPersistable<Long> {
     private String username;
 
     @NotEmpty
-    @Size(min = 3, max = 61)
     private String password;
 
     @OneToMany(mappedBy = "connecter")
@@ -41,7 +40,7 @@ public class Account extends AbstractPersistable<Long> {
 
     @OneToMany(mappedBy = "receiver")
     private List<Connection> connectionsToThisAccount;
-    
+
     @OneToMany(mappedBy = "account")
     private List<Skill> skills;
 
