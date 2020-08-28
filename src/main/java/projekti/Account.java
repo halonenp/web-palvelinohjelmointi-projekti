@@ -15,12 +15,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import javax.persistence.Table;
 
 /**
  *
  * @author halon
  */
 @Entity
+@Table(name="account")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
