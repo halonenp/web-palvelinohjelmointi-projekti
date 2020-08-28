@@ -58,9 +58,9 @@ public class AccountController {
         }
         account.setUsername(username);
         account.setPassword(passwordEncoder.encode(password));
-        account.setConnectionsFromThisAccount(new ArrayList<>());
-        account.setConnectionsToThisAccount(new ArrayList<>());
-        account.setSkills(new ArrayList<>());
+        //account.setConnectionsFromThisAccount(new ArrayList<>());
+        //account.setConnectionsToThisAccount(new ArrayList<>());
+        //account.setSkills(new ArrayList<>());
 
         //Account a = new Account(username, passwordEncoder.encode(password), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         /*
