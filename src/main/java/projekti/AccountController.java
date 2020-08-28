@@ -56,8 +56,9 @@ public class AccountController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        account.setUsername(username);
-        account.setPassword(passwordEncoder.encode(password));
+        Account user = new Account();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
         //account.setConnectionsFromThisAccount(new ArrayList<>());
         //account.setConnectionsToThisAccount(new ArrayList<>());
         //account.setSkills(new ArrayList<>());
@@ -68,7 +69,7 @@ public class AccountController {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));*/
         
-        accountRepository.save(account);
+        accountRepository.save(user);
         return "redirect:/login";
     }
 
