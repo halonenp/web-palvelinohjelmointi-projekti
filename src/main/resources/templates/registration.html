@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Le Dance Signup</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
         <meta charset="UTF-8" />
     </head>
     <body>
@@ -12,6 +14,8 @@
             <input type="password" name="password"/>
             <input type="submit" value="Create new account!"/>
         </form>
+        
+        <a  th:href="@{/login}">Login</a>
     </body>
 </html>
  

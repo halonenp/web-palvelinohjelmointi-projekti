@@ -49,6 +49,29 @@ public class AccountController {
         return "registration";
     }
 
+    @PostMapping("/registration")
+    public String signup(@Valid @ModelAttribute Account account, BindingResult bindingResult, @RequestParam String username,
+            @RequestParam String password) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+        account.setUsername(username);
+        account.setPassword(passwordEncoder.encode(password));
+        account.setConnectionsFromThisAccount(new ArrayList<>());
+        account.setConnectionsToThisAccount(new ArrayList<>());
+        account.setSkills(new ArrayList<>());
+
+        //Account a = new Account(username, passwordEncoder.encode(password), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        /*
+        Account user = new Account();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));*/
+        
+        accountRepository.save(account);
+        return "redirect:/login";
+    }
+
     /*@PostMapping("/registration")
     public String register(
             @Valid @ModelAttribute Account account,
@@ -60,7 +83,7 @@ public class AccountController {
         accountRepository.save(account);
         return "redirect:/profilepage";
     }*/
-
+ /*
     @PostMapping("/registration")
     public String add(@RequestParam String username, @RequestParam String password) {
         if (accountRepository.findByUsername(username) != null) {
@@ -70,8 +93,7 @@ public class AccountController {
         Account a = new Account(username, passwordEncoder.encode(password), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         accountRepository.save(a);
         return "redirect:/login";
-    }
-     
+    }*/
  /*
     @PostMapping("/registration")
     public String register(
